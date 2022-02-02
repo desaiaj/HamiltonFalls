@@ -299,6 +299,11 @@ used without due acknowledgement. I have not made my work available to anyone el
                     markers[i].setMap(null);
             }
             map.setCenter(hamiltonLatLng);
+            const toggle = panorama.getVisible();
+
+            if (toggle == true) {
+                panorama.setVisible(false);
+            }
         }
 
         document.getElementById("Cascade").onclick = filterCascadeType;
@@ -311,12 +316,22 @@ used without due acknowledgement. I have not made my work available to anyone el
                     markers[i].setMap(null);
             }
             map.setCenter(hamiltonLatLng);
+            const toggle = panorama.getVisible();
+
+            if (toggle == true) {
+                panorama.setVisible(false);
+            }
         }
         document.getElementById("WaterFall").onclick = filterWaterfallType;
 
         function ShowAllWaterfalls() {
             for (i = 0; i < markers.length; i++) markers[i].setMap(map);
             map.setCenter(hamiltonLatLng);
+            const toggle = panorama.getVisible();
+
+            if (toggle == true) {
+                panorama.setVisible(false);
+            }
         }
 
         document.getElementById("all").onclick = ShowAllWaterfalls;
