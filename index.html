@@ -1,0 +1,348 @@
+<!-- "StAuth10244: I John Doe, 123456 certify that this material is my original work. No other person's work has been
+used without due acknowledgement. I have not made my work available to anyone else." -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Assignment #1 - Maps and Geolocation</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <style>
+        #map {
+            height: 600px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <script src="Waterfalls.js"></script>
+    <div id="map" class="col-sm-12"></div>
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-center">
+                <input type="button" class="btn btn-success mb-2" value="Toggle Street View" id="toggle" />
+                <button id="geolocate" class="btn btn-primary mb-2">Geolocate</button>
+
+                <label style="margin-left: 5%;"> Filter by type: </label>
+                <button id="Cascade" class="btn btn-info mb-2">Cascade</button>
+                <button id="WaterFall" class="btn btn-success mb-2">Waterfall</button>
+                <button id="all" class="btn btn-dark mb-2">Show all</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label class="form-label" for="address">Address :</label>
+                <input type="text" class="form-control mb-2" id="address" placeholder="Enter Address">
+            </div>
+            <div class="col-1">
+                <br>
+                <button id="geocode" class="btn btn-secondary mt-2">Geocode</button>
+            </div>
+            <div class="col-6 row">
+                <div class="col-6">
+                    <label for="from" class="form-label">From:</label>
+                    <select id="from" class="form-select" onchange="locateDirections();">
+                        <option value="MyLocation" selected>My Location</option>
+                        <option value="Veevers Falls">Veevers Falls</option>
+                        <option value="Westcliffe Falls">Westcliffe Falls</option>
+                        <option value="Albion Falls">Albion Falls</option>
+                        <option value="Auchmar Falls">Auchmar Falls</option>
+                        <option value="Beckett Falls">Beckett Falls</option>
+                        <option value="Broman Falls">Broman Falls</option>
+                        <option value="Buttermilk Falls">Buttermilk Falls</option>
+                        <option value="Chedoke Falls">Chedoke Falls</option>
+                        <option value="Cliffview Falls">Cliffview Falls</option>
+                        <option value="Mountview Falls">Mountview Falls</option>
+                        <option value="Princess Falls">Princess Falls</option>
+                        <option value="Pritchard Falls">Pritchard Falls</option>
+                        <option value="Scenic Falls">Scenic Falls</option>
+                        <option value="Felker's Falls">Felker's Falls</option>
+                        <option value="West Iroquoia Falls">West Iroquoia Falls</option>
+                        <option value="Baby Albion Falls">Baby Albion Falls</option>
+                        <option value="Billy Monkley Cascade">Billy Monkley Cascade</option>
+                        <option value="Lower Cliffview Falls">Lower Cliffview Falls</option>
+                        <option value="Lower Princess Falls">Lower Princess Falls</option>
+                        <option value="Lower Sanatorium Cascade">Lower Sanatorium Cascade</option>
+                        <option value="Lower Westcliffe Falls">Lower Westcliffe Falls</option>
+                        <option value="Middle Glendale Falls">Middle Glendale Falls</option>
+                        <option value="Mountain Spring Falls">Mountain Spring Falls</option>
+                        <option value="Upper Glendale Falls">Upper Glendale Falls</option>
+                        <option value="Upper Sanatorium Falls">Upper Sanatorium Falls</option>
+                        <option value="East Iroquoia Falls">East Iroquoia Falls</option>
+                        <option value="Heritage Green Falls">Heritage Green Falls</option>
+                        <option value="Little Davis Falls">Little Davis Falls</option>
+                        <option value="Lower Chedoke Falls">Lower Chedoke Falls</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label for="to" class="form-label">To:</label>
+                    <select id="to" class="form-select" onchange="locateDirections();">
+                        <option value="Veevers Falls">Veevers Falls</option>
+                        <option value="Westcliffe Falls">Westcliffe Falls</option>
+                        <option value="Albion Falls">Albion Falls</option>
+                        <option value="Auchmar Falls">Auchmar Falls</option>
+                        <option value="Beckett Falls">Beckett Falls</option>
+                        <option value="Broman Falls">Broman Falls</option>
+                        <option value="Buttermilk Falls">Buttermilk Falls</option>
+                        <option value="Chedoke Falls">Chedoke Falls</option>
+                        <option value="Cliffview Falls">Cliffview Falls</option>
+                        <option value="Mountview Falls">Mountview Falls</option>
+                        <option value="Princess Falls">Princess Falls</option>
+                        <option value="Pritchard Falls">Pritchard Falls</option>
+                        <option value="Scenic Falls">Scenic Falls</option>
+                        <option value="Felker's Falls">Felker's Falls</option>
+                        <option value="West Iroquoia Falls">West Iroquoia Falls</option>
+                        <option value="Baby Albion Falls">Baby Albion Falls</option>
+                        <option value="Billy Monkley Cascade">Billy Monkley Cascade</option>
+                        <option value="Lower Cliffview Falls">Lower Cliffview Falls</option>
+                        <option value="Lower Princess Falls">Lower Princess Falls</option>
+                        <option value="Lower Sanatorium Cascade">Lower Sanatorium Cascade</option>
+                        <option value="Lower Westcliffe Falls">Lower Westcliffe Falls</option>
+                        <option value="Middle Glendale Falls">Middle Glendale Falls</option>
+                        <option value="Mountain Spring Falls">Mountain Spring Falls</option>
+                        <option value="Upper Glendale Falls">Upper Glendale Falls</option>
+                        <option value="Upper Sanatorium Falls">Upper Sanatorium Falls</option>
+                        <option value="East Iroquoia Falls">East Iroquoia Falls</option>
+                        <option value="Heritage Green Falls">Heritage Green Falls</option>
+                        <option value="Little Davis Falls">Little Davis Falls</option>
+                        <option value="Lower Chedoke Falls">Lower Chedoke Falls</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbsua4EskTMpwMIvO5vkvTgw35rhCwTfs&callback=initMap">
+        </script>
+
+    <script>
+        var map;
+        var markers = [];
+        var myPosition;
+        var panorama;
+        var hamiltonLatLng;
+
+        function initMap() {
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+
+            map = new google.maps.Map(document.getElementById("map"),
+                {
+                    center: { lat: 43.2387, lng: -79.8881 },
+                    zoom: 12,
+                    streetViewControl: false,
+                });
+            geocoder = new google.maps.Geocoder();
+            directionsRenderer.setMap(map);
+
+            marker_clicked = function () {
+                infowindow.close();
+                content = '<b>' + this.NAME + "</b>" + "<br><div>The type of this fall is '" + this.TYPE + "' and you can visit it from '" +
+                    this.ACCESS_FROM + "' side"
+                infowindow.setContent(content);
+                infowindow.open(map, this);
+            }
+            markWaterFallsonMap();
+            infowindow = new google.maps.InfoWindow();
+            navigator.geolocation.getCurrentPosition(getMyLocationLatLong);
+            document.getElementById("toggle").addEventListener("click", setStreetView);
+            hamiltonLatLng = new google.maps.LatLng(43.24424250690414, -79.90041368177135);
+        }
+
+        function markWaterFallsonMap() {
+            for (i = 0; i < falls.length; i++) {
+                if (falls[i].TYPE == "Cascade")
+                    fall_icon = "http://maps.google.com/mapfiles/kml/shapes/picnic.png";
+                else if (falls[i].TYPE == "Waterfall")
+                    fall_icon = "http://maps.google.com/mapfiles/kml/shapes/fishing.png";
+                else
+                    fall_icon = "http://maps.google.com/mapfiles/kml/paddle/blu-blank.png";
+
+                fall_marker = new google.maps.Marker({
+                    position: {
+                        lat: falls[i].LATITUDE,
+                        lng: falls[i].LONGITUDE
+                    },
+                    title: falls[i].NAME,
+                    icon: fall_icon
+                });
+                fall_marker.NAME = falls[i].NAME;
+                fall_marker.ACCESS_FROM = falls[i].ACCESS_FROM;
+                fall_marker.TYPE = falls[i].TYPE;
+                fall_marker.setMap(map);
+                fall_marker.addListener('click', marker_clicked);
+                markers.push(fall_marker);
+            }
+        }
+
+        function getMyLocationLatLong(position) {
+            user_location = new google.maps.Marker({
+                position: {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                },
+            });
+            myPosition = new google.maps.LatLng(user_location.position.lat(), user_location.position.lng());
+        }
+
+        function LocateMeonMap(position) {
+            user_location = new google.maps.Marker({
+                position: {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                },
+                title: "Your Location",
+                icon: "http://maps.google.com/mapfiles/kml/shapes/ranger_station.png"
+            });
+            user_location.setMap(map);
+            map.setCenter(user_location.position);
+        }
+
+        document.getElementById("geolocate").onclick = function () {
+            navigator.geolocation.getCurrentPosition(LocateMeonMap);
+        }
+
+        function codeAddress() {
+            var address = document.getElementById('address').value;
+
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status == 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    // document.getElementById("coords").innerHTML =
+                    //     "coords: " +
+                    //     results[0].geometry.location.lat() + ", " +
+                    //     results[0].geometry.location.lng();
+
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location,
+                        title: "Your Searched Location",
+                        icon: "http://maps.google.com/mapfiles/kml/shapes/arrow.png"
+                    });
+
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+
+        document.getElementById("geocode").onclick = codeAddress;
+
+        function locateDirections() {
+            const toggle = panorama.getVisible();
+
+            if (toggle == true) {
+                panorama.setVisible(false);
+            }
+
+            var start = document.getElementById('from').value;
+            var end = document.getElementById('to').value;
+
+            var startfound = false;
+            var endfound = false;
+            if (start == "MyLocation") {
+                start = myPosition;
+                startfound = true;
+            }
+
+            for (i = 0; i < falls.length; i++) {
+                if (!startfound) {
+                    // console.log(falls[i].NAME);
+                    if (falls[i].NAME == start) {
+                        start = new google.maps.LatLng(falls[i].LATITUDE, falls[i].LONGITUDE);
+                        startfound = true;
+                    }
+                }
+                if (!endfound) {
+                    if (falls[i].NAME == end) {
+                        end = new google.maps.LatLng(falls[i].LATITUDE, falls[i].LONGITUDE);
+                        endfound = true;
+                    }
+                }
+                if (startfound && endfound)
+                    break;
+            }
+
+            if (!startfound && !endfound) {
+                end = myPosition;
+                start = myPosition;
+            }
+
+            var request = {
+                origin: start,
+                destination: end,
+                travelMode: 'DRIVING'
+            };
+
+            directionsService.route(request, function (result, status) {
+                if (status == 'OK') {
+                    directionsRenderer.setDirections(result);
+                }
+            });
+            map.setCenter(hamiltonLatLng);
+        }
+
+        function filterCascadeType() {
+            for (i = 0; i < markers.length; i++) {
+                if (markers[i].TYPE == "Cascade")
+                    markers[i].setMap(map);
+                else
+                    markers[i].setMap(null);
+            }
+            map.setCenter(hamiltonLatLng);
+        }
+
+        document.getElementById("Cascade").onclick = filterCascadeType;
+
+        function filterWaterfallType() {
+            for (i = 0; i < markers.length; i++) {
+                if (markers[i].TYPE == "Waterfall")
+                    markers[i].setMap(map);
+                else
+                    markers[i].setMap(null);
+            }
+            map.setCenter(hamiltonLatLng);
+        }
+        document.getElementById("WaterFall").onclick = filterWaterfallType;
+
+        function ShowAllWaterfalls() {
+            for (i = 0; i < markers.length; i++) markers[i].setMap(map);
+            map.setCenter(hamiltonLatLng);
+        }
+
+        document.getElementById("all").onclick = ShowAllWaterfalls;
+
+        function setStreetView() {
+            panorama = map.getStreetView(); // TODO fix type
+            panorama.setPosition(myPosition);
+            panorama.setPov({
+                heading: 90,
+                pitch: 0,
+            });
+            map.setStreetView(panorama);
+            toggleStreetView();
+        }
+
+        function toggleStreetView() {
+            const toggle = panorama.getVisible();
+
+            if (toggle == false) {
+                panorama.setVisible(true);
+            } else {
+                panorama.setVisible(false);
+            }
+        }
+
+    </script>
+</body>
+
+</html>
